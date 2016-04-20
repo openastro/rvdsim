@@ -67,26 +67,46 @@ Vector6 propagateClohessyWiltshireSolution( const Vector6& initialState,
             * thrustAcceleration[ astro::xPositionIndex ]
             * ( std::sin( targetMeanMotion * finalTime ) - targetMeanMotion * finalTime )
           + thrustAcceleration[ astro::zPositionIndex ] / ( targetMeanMotion * targetMeanMotion )
-            * (1.0 - std::cos( targetMeanMotion * finalTime ) );
+            * ( 1.0 - std::cos( targetMeanMotion * finalTime ) );
 
     finalState[ astro::xVelocityIndex ]
-        = targetMeanMotion * ( 4.0 / targetMeanMotion * initialState[ astro::xVelocityIndex ]
+        = // unperturbed terms
+          targetMeanMotion * ( 4.0 / targetMeanMotion * initialState[ astro::xVelocityIndex ]
             - 6.0 * initialState[ astro::zPositionIndex ] )
             * std::cos( targetMeanMotion * finalTime )
           + 2.0 * initialState[ astro::zVelocityIndex ]
             * std::sin( targetMeanMotion * finalTime )
           + ( 6.0 * targetMeanMotion * initialState[ astro::zPositionIndex]
-              - 3.0 * initialState[ astro::xVelocityIndex ] );
+              - 3.0 * initialState[ astro::xVelocityIndex ] )
+          // constant force terms
+          + thrustAcceleration[ astro::zPositionIndex ]
+            * 2.0 / ( targetMeanMotion * targetMeanMotion )
+            * ( targetMeanMotion - targetMeanMotion * std::cos( targetMeanMotion * finalTime ) )
+          + thrustAcceleration[ astro::xPositionIndex ]
+            * ( 4.0 / targetMeanMotion * std::sin( targetMeanMotion * finalTime )
+                - 3.0 * finalTime );
 
     finalState[ astro::yVelocityIndex ]
-        = -targetMeanMotion * initialState[ astro::yPositionIndex ]
-          * std::sin( targetMeanMotion * finalTime );
+        = // unperturbed terms
+          -targetMeanMotion * initialState[ astro::yPositionIndex ]
+            * std::sin( targetMeanMotion * finalTime )
+          + initialState[ astro::yVelocityIndex ] * std::cos( targetMeanMotion * finalTime )
+          // constant force terms
+          + thrustAcceleration[ astro::yPositionIndex ] / targetMeanMotion
+            * std::sin( targetMeanMotion * finalTime );
 
     finalState[ astro::zVelocityIndex ]
-        = -targetMeanMotion * ( 2.0 * initialState[ astro::xVelocityIndex ] / targetMeanMotion
+        = // unperturbed terms
+          -targetMeanMotion * ( 2.0 * initialState[ astro::xVelocityIndex ] / targetMeanMotion
             - 3.0 * initialState[ astro::zPositionIndex ] )
             * std::sin( targetMeanMotion * finalTime )
-          + initialState[ astro::zVelocityIndex ] * std::cos( targetMeanMotion * finalTime );
+          + initialState[ astro::zVelocityIndex ] * std::cos( targetMeanMotion * finalTime )
+          // constant force terms
+          + thrustAcceleration[ astro::xPositionIndex ]
+            * 2.0 / ( targetMeanMotion * targetMeanMotion )
+            * ( targetMeanMotion * std::cos( targetMeanMotion * finalTime ) - targetMeanMotion )
+          + thrustAcceleration[ astro::zPositionIndex ] / targetMeanMotion
+            * std::sin( targetMeanMotion * finalTime );
 
     return finalState;
 }
