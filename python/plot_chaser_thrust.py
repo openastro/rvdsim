@@ -65,7 +65,7 @@ input_path_prefix = config["input_directory"] + "/"
 output_path_prefix = config["output_directory"] + '/'
 
 # Read and store data files.
-chaser_path = pd.read_csv(input_path_prefix + config["chaser_path"])
+chaser_thrust = pd.read_csv(input_path_prefix + config["chaser_thrust"])
 
 print "Input data files successfully read!"
 
@@ -78,30 +78,24 @@ ax2 = fig.add_subplot(2, 2, 2)
 ax3 = fig.add_subplot(2, 2, 3)
 ax4 = fig.add_subplot(2, 2, 4, frameon=False)
 
-# Plot X-Z projection
-ax1.plot(chaser_path['x'],chaser_path['z'],color='k')
-ax1.plot(chaser_path['x'].iloc[0],chaser_path['z'].iloc[0],color='g',marker='o')
-ax1.plot(chaser_path['x'].iloc[-1],chaser_path['z'].iloc[-1],color='r',marker='o')
-ax1.set_xlabel('x [m]')
-ax1.set_ylabel('z [m]')
+# Plot time-history of x-component of thrust history.
+ax1.plot(chaser_thrust['t'],chaser_thrust['Tx'],color='k')
+ax1.set_xlabel('t [s]')
+ax1.set_ylabel('x [N]')
 ax1.ticklabel_format(style='sci', axis='both', scilimits=(0,0))
 ax1.grid()
 
-# Plot X-Y projection
-ax2.plot(chaser_path['x'],chaser_path['y'],color='k')
-ax2.plot(chaser_path['x'].iloc[0],chaser_path['y'].iloc[0],color='g',marker='o')
-ax2.plot(chaser_path['x'].iloc[-1],chaser_path['y'].iloc[-1],color='r',marker='o')
-ax2.set_xlabel('x [m]')
-ax2.set_ylabel('y [m]')
+# Plot time-history of z-component of thrust history.
+ax2.plot(chaser_thrust['t'],chaser_thrust['Tz'],color='k')
+ax2.set_xlabel('t [s]')
+ax2.set_ylabel('z [N]')
 ax2.ticklabel_format(style='sci', axis='both', scilimits=(0,0))
 ax2.grid()
 
-# Plot Z-Y projection
-ax3.plot(chaser_path['z'],chaser_path['y'],color='k')
-ax3.plot(chaser_path['z'].iloc[0],chaser_path['y'].iloc[0],color='g',marker='o')
-ax3.plot(chaser_path['z'].iloc[-1],chaser_path['y'].iloc[-1],color='r',marker='o')
-ax3.set_xlabel('z [m]')
-ax3.set_ylabel('y [m]')
+# Plot time-history of y-component of thrust history.
+ax3.plot(chaser_thrust['t'],chaser_thrust['Ty'],color='k')
+ax3.set_xlabel('t [s]')
+ax3.set_ylabel('y [N]')
 ax3.ticklabel_format(style='sci', axis='both', scilimits=(0,0))
 ax3.grid()
 

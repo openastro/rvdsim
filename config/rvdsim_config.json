@@ -4,7 +4,7 @@
 {
     // Set propagation parameters.
     // [start_time [s], end_time [s]]
-    "propagation_settings"                      : [0.0, 5000.0],
+    "propagation_settings"                      : [0.0, 10000.0],
 
     // Set Earth gravitational parameter.
     // [m^3 s^-2].
@@ -24,7 +24,7 @@
     // If mode set to "throttlable" or "on_off" and T_max is 0.0 N, thrust is unconstrained.
     // If mode set to "throttlable" and T_max is > 0.0 N, thrust is constrained.
     // If mode set to "on_off" and T_max is > 0.0 N, thrust is 0.0 N or T_max.
-    "chaser_thrust_settings"                    : [10.0, "on_off", 0.1],
+    "chaser_thrust_settings"                    : [0.0, "throttlable", 0.1],
 
     // Set chaser mass.
     // [kg]

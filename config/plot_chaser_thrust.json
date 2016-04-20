@@ -1,0 +1,23 @@
+// Copyright (c) 2016 Kartik Kumar, Dinamica Srl (me@kartikkumar.com)
+// Distributed under the MIT License.
+// See accompanying file LICENSE.md or copy at http://opensource.org/licenses/MIT
+{
+    // Directory containing input files.
+    "input_directory"           : "/Users/kartikkumar/Desktop/",
+
+    // Input data files.
+    "chaser_thrust"               : "chaser_thrust_history.csv",
+
+    // Directory where 2D figure is stored.
+    "output_directory"          : "/Users/kartikkumar/Desktop/",
+
+    // Filename for 2D figure.
+    "2D_figure"                 : "chaser_thrust.png",
+
+    // Flag that sets whether interactive 3D figure should be shown (a Python plotting window pops
+    // up).
+    "show_3D_figure"            : false,
+
+    // Characteristics for figures.
+    "figure_dpi"                : 300
+}
