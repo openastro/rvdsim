@@ -31,19 +31,24 @@ These dependencies will be downloaded and configured automagically if not alread
 Installation
 ------
 
-Run the following commands to download, build, and install this project.
+Run the following commandsa to download, build, and install this project.
 
     git clone https://www.github.com/openastro/rvdsim
     cd rvdsim
     git submodule init && git submodule update
     mkdir build && cd build
     cmake .. && cmake --build .
+    cd ..
 
 To install the header files, libraries and executables, run the following from within the `build` directory:
 
     make install
 
 Note that dependencies are installed by fetching them online, in case they cannot be detected on your local system. If the build process fails, check the error log given. Typically, building fails due to timeout. Simply run the `cmake --build .` command once more.
+
+To install the necessary Python libraries for the plotting scripts, run the following command.
+
+    pip install -r python/requirements.txt
 
 Build options
 -------------
