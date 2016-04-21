@@ -5,6 +5,7 @@
  */
 
 #include <cstdlib>
+#include <limits>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -196,6 +197,21 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
     const rvdsim::Real chaserMass = chaserMassIterator->value.GetDouble( );
     std::cout << "Chaser mass [kg]                              " << chaserMass << std::endl;
 
+    // Search for arrival distance tolerance in config.
+    rapidjson::Value::MemberIterator arrivalDistanceToleranceIterator
+        = config.FindMember( "arrival_distance_tolerance" );
+    if ( arrivalDistanceToleranceIterator == config.MemberEnd( ) )
+    {
+        std::cerr << "ERROR: Configuration option \"arrival_distance_tolerance\" could not be "
+                  << "found in JSON input!"
+                  << std::endl;
+        throw;
+    }
+    const rvdsim::Real arrivalDistanceTolerance
+        = arrivalDistanceToleranceIterator->value.GetDouble( );
+    std::cout << "Arrival distance tolerance [m]                 "
+              << arrivalDistanceTolerance << std::endl;
+
     // Search for output directory in config.
     rapidjson::Value::MemberIterator outputDirectoryIterator
         = config.FindMember( "output_directory" );
@@ -209,20 +225,6 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
     const std::string outputDirectory = outputDirectoryIterator->value.GetString( );
     std::cout << "Output directory                              "
               << outputDirectory << std::endl;
-
-    // Search for metadata filename in config.
-    rapidjson::Value::MemberIterator metadataFilenameIterator
-        = config.FindMember( "metadata_filename" );
-    if ( metadataFilenameIterator == config.MemberEnd( ) )
-    {
-        std::cerr << "ERROR: Configuration option \"metadata_filename\" could not be found in JSON"
-                  << "input!"
-                  << std::endl;
-        throw;
-    }
-    const std::string metadataFilename
-        = metadataFilenameIterator->value.GetString( );
-    std::cout << "Metadata output file                          " << metadataFilename << std::endl;
 
     // Search for chaser state history filename in config.
     rapidjson::Value::MemberIterator chaserStateHistoryFilenameIterator
@@ -414,12 +416,6 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
 
     std::cout << "Writing output to file ... " << std::endl;
 
-    // Write simulation metadata to file.
-    // std::ostringstream metadataPath;
-    // metadataPath << outputDirectory << "/" << metadataFilename;
-    // std::ofstream chaserStateHistoryFile(  metadataPath.str( ) );
-    // chaserStateHistoryFile << "t,x,y,z,xdot,ydot,zdot" << std::endl;
-
     // Write chaser state history to CSV file.
     std::ostringstream chaserStateHistoryPath;
     chaserStateHistoryPath << outputDirectory << "/" << chaserStateHistoryFilename;
@@ -456,6 +452,20 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
     chaserThrustHistoryFile.close( );
 
     std::cout << "Output written to file successfully!" << std::endl;
+    std::cout << std::endl;
+
+    // Check if target was reached.
+    rvdsim::Vector6 finalState = chaserStateHistory.rbegin( )->second;
+    const rvdsim::Real finalDistanceToTarget = sml::norm< double >( finalState );
+    if ( finalDistanceToTarget > arrivalDistanceTolerance )
+    {
+        std::cout << "Target not reached! :(" << std::endl;
+        std::cout << "You are " << finalDistanceToTarget << " m from the target" << std::endl;
+    }
+    else
+    {
+        std::cout << "Congrats! You reached the target! :)" << std::endl;
+    }
 
     ///////////////////////////////////////////////////////////////////////////
 
