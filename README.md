@@ -23,6 +23,7 @@ In addition, Rvdsim depends on the following libraries:
 
   - [SML](https://www.github.com/astropnp/sml) (math library)
   - [Astro](https://www.github.com/astropnp/astro) (astrodynamics library)
+  - [RapidJSON](https://github.com/miloyip/rapidjson) (JSON library)
   - [CATCH](https://www.github.com/philsquared/Catch) (unit testing library necessary for `BUILD_TESTS` option)
 
 These dependencies will be downloaded and configured automagically if not already present locally (requires an internet connection).
