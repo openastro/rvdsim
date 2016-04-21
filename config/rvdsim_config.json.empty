@@ -2,6 +2,48 @@
 // Distributed under the MIT License.
 // See accompanying file LICENSE.md or copy at http://opensource.org/licenses/MIT
 {
-    // Earth gravitational parameter [m^3 s^-2].
+    // Set propagation parameters.
+    // [start_time [s], end_time [s]]
+    "propagation_settings"                      : [,],
+
+    // Set Earth gravitational parameter.
+    // [m^3 s^-2].
     "earth_gravitational_parameter"             : ,
+
+    // Set semi-major axis of target's orbit (circular orbit).
+    // [m]
+    "target_semi_major_axis"                    : ,
+
+    // Set initial, relative Cartesian state for chaser.
+    // [x [m], y [m], z [m], xdot [m/s], ydot[m/s], zdot [m/s]]
+    "chaser_initial_state"                      : [, , , , , ],
+
+    // Set chaser thrust settings.
+    // [T_max [N], (throttle|on_off|off), frequency [Hz]]
+    // If mode set to "off", T_max is ignored.
+    // If mode set to "throttle" or "on_off" and T_max is 0.0 N, thrust is unconstrained.
+    // If mode set to "throttle" and T_max is > 0.0 N, thrust is constrained.
+    // If mode set to "on_off" and T_max is > 0.0 N, thrust is 0.0 N or T_max.
+    "chaser_thrust_settings"                    : [, "", ],
+
+    // Set chaser mass.
+    // [kg]
+    "chaser_mass"                               : ,
+
+    // Set arrival distance tolerance.
+    // If the final state of the chaser is within this distance with respect to the target, the
+    // simulation is deemed successful.
+    // [m]
+    "arrival_distance_tolerance"                : ,
+
+    // Set output directory.
+    "output_directory"                          : "",
+
+    // Set chaser state history output filename.
+    // N.B. the output file is in CSV format!
+    "chaser_state_history_filename"             : "",
+
+    // Set chaser thrust history output filename.
+    // N.B. the output file is in CSV format!
+    "chaser_thrust_history_filename"             : ""
 }

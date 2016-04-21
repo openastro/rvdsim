@@ -7,17 +7,13 @@
 
     // Input data files.
     // N.B. the input file must be in CSV format!
-    "chaser_path"               : "",
+    "chaser_thrust"             : "",
 
     // Directory where 2D figure is stored.
     "output_directory"          : "",
 
     // Filename for 2D figure.
     "2D_figure"                 : "",
-
-    // Flag that sets whether interactive 3D figure should be shown (a Python plotting window pops
-    // up).
-    "show_3D_figure"            : ,
 
     // Characteristics for figures.
     "figure_dpi"                :
