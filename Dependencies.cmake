@@ -6,40 +6,6 @@
 include(ExternalProject)
 
 if(NOT BUILD_DEPENDENCIES)
-  find_package(rapidjson)
-endif(NOT BUILD_DEPENDENCIES)
-
-if(NOT RAPIDJSON_FOUND)
-  message(STATUS "RapidJSON will be downloaded when ${CMAKE_PROJECT_NAME} is built")
-  ExternalProject_Add(rapidjson-lib
-    PREFIX ${EXTERNAL_PATH}/RapidJson
-    #--Download step--------------
-    URL https://github.com/miloyip/rapidjson/archive/master.zip
-    TIMEOUT 30
-    #--Update/Patch step----------
-    #--Configure step-------------
-    CONFIGURE_COMMAND ""
-    #--Build step-----------------
-    BUILD_COMMAND ""
-    #--Install step---------------
-    INSTALL_COMMAND ""
-    #--Output logging-------------
-    LOG_DOWNLOAD ON
-  )
-  ExternalProject_Get_Property(rapidjson-lib source_dir)
-  set(RAPIDJSON_INCLUDE_DIRS ${source_dir}/include
-    CACHE INTERNAL "Path to include folder for RapidJSON")
-endif(NOT RAPIDJSON_FOUND)
-
-if(NOT APPLE)
-  include_directories(SYSTEM AFTER "${RAPIDJSON_INCLUDE_DIRS}")
-else(APPLE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem \"${RAPIDJSON_INCLUDE_DIRS}\"")
-endif(NOT APPLE)
-
-# -------------------------------
-
-if(NOT BUILD_DEPENDENCIES)
   find_package(SML)
 endif(NOT BUILD_DEPENDENCIES)
 
@@ -106,6 +72,44 @@ if(NOT APPLE)
   include_directories(SYSTEM AFTER "${ASTRO_INCLUDE_DIRS}")
 else(APPLE)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem \"${ASTRO_INCLUDE_DIRS}\"")
+endif(NOT APPLE)
+
+# -------------------------------
+
+if(NOT BUILD_DEPENDENCIES)
+  find_package(rapidjson)
+endif(NOT BUILD_DEPENDENCIES)
+
+if(NOT RAPIDJSON_FOUND)
+  message(STATUS "RAPIDJSON will be downloaded when ${CMAKE_PROJECT_NAME} is built")
+  ExternalProject_Add(rapidjson-lib
+    DEPENDS astro-lib
+    PREFIX ${EXTERNAL_PATH}/rapidjson
+    #--Download step--------------
+    URL https://github.com/miloyip/rapidjson/archive/master.zip
+    TIMEOUT 30
+    #--Update/Patch step----------
+    UPDATE_COMMAND ""
+    PATCH_COMMAND ""
+    #--Configure step-------------
+    CONFIGURE_COMMAND ""
+    #--Build step-----------------
+    BUILD_COMMAND ""
+    #--Install step---------------
+    INSTALL_COMMAND ""
+    #--Output logging-------------
+    LOG_DOWNLOAD ON-------------
+    LOG_DOWNLOAD ON
+  )
+  ExternalProject_Get_Property(rapidjson-lib source_dir)
+  set(RAPIDJSON_INCLUDE_DIRS ${source_dir}/include
+      CACHE INTERNAL "Path to include folder for RapidJSON")
+endif(NOT RAPIDJSON_FOUND)
+
+if(NOT APPLE)
+  include_directories(SYSTEM AFTER "${RAPIDJSON_INCLUDE_DIRS}")
+else(APPLE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem \"${RAPIDJSON_INCLUDE_DIRS}\"")
 endif(NOT APPLE)
 
 # -------------------------------
