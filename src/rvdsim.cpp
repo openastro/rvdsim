@@ -161,9 +161,9 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
               << chaserThrustMaximum << std::endl;
     const std::string chaserThrustMode = chaserThrustSettingsIterator->value[ 1 ].GetString( );
     std::cout << "Chaser thrust mode                            ";
-    if ( !chaserThrustMode.compare( "throttlable" ) )
+    if ( !chaserThrustMode.compare( "throttle" ) )
     {
-        std::cout << "Throttlable" << std::endl;
+        std::cout << "throttle" << std::endl;
     }
     else if ( !chaserThrustMode.compare( "on_off" ) )
     {
@@ -176,7 +176,7 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
     else
     {
         std::cerr << "ERROR: 2nd configuration option for \"chaser_thrust_settings\" should be "
-                  << "\"throttlable\", \"on_off\" or \"off\"!"
+                  << "\"throttle\", \"on_off\" or \"off\"!"
                   << std::endl;
         throw;
     }
@@ -209,6 +209,20 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
     const std::string outputDirectory = outputDirectoryIterator->value.GetString( );
     std::cout << "Output directory                              "
               << outputDirectory << std::endl;
+
+    // Search for metadata filename in config.
+    rapidjson::Value::MemberIterator metadataFilenameIterator
+        = config.FindMember( "metadata_filename" );
+    if ( metadataFilenameIterator == config.MemberEnd( ) )
+    {
+        std::cerr << "ERROR: Configuration option \"metadata_filename\" could not be found in JSON"
+                  << "input!"
+                  << std::endl;
+        throw;
+    }
+    const std::string metadataFilename
+        = metadataFilenameIterator->value.GetString( );
+    std::cout << "Metadata output file                          " << metadataFilename << std::endl;
 
     // Search for chaser state history filename in config.
     rapidjson::Value::MemberIterator chaserStateHistoryFilenameIterator
@@ -284,6 +298,11 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
 
     rvdsim::ThrustHistory chaserThrustHistory;
 
+    bool isThrottleMax = false;
+
+    std::cout << std::endl;
+    std::cout << "Executing simulation ... " << std::endl;
+
     while ( timeToGo > 0.0 )
     {
         // Compute end state resulting from ballistic trajectory.
@@ -324,9 +343,11 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
                 const rvdsim::Real thrustAccelerationNorm
                     = sml::norm< double >( thrustAcceleration );
 
-                if ( !chaserThrustMode.compare( "throttlable" )
+                if ( !chaserThrustMode.compare( "throttle" )
                      && thrustAccelerationNorm > chaserThrustAccelerationMaximum )
                 {
+                    isThrottleMax = true;
+
                     for ( int i = 0; i < 3; ++i )
                     {
                         thrustAcceleration[ i ] = chaserThrustAccelerationMaximum
@@ -383,6 +404,22 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
         chaserStateHistory[ currentTime ] = currentState;
     }
 
+    if ( isThrottleMax )
+    {
+        std::cout << "Maximum thrust level reached, thruster throttled!" << std::endl;
+    }
+
+    std::cout << "Simulation completed successfully!" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Writing output to file ... " << std::endl;
+
+    // Write simulation metadata to file.
+    // std::ostringstream metadataPath;
+    // metadataPath << outputDirectory << "/" << metadataFilename;
+    // std::ofstream chaserStateHistoryFile(  metadataPath.str( ) );
+    // chaserStateHistoryFile << "t,x,y,z,xdot,ydot,zdot" << std::endl;
+
     // Write chaser state history to CSV file.
     std::ostringstream chaserStateHistoryPath;
     chaserStateHistoryPath << outputDirectory << "/" << chaserStateHistoryFilename;
@@ -417,6 +454,8 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
                                 << it->second[ 2 ] << std::endl;
     }
     chaserThrustHistoryFile.close( );
+
+    std::cout << "Output written to file successfully!" << std::endl;
 
     ///////////////////////////////////////////////////////////////////////////
 
