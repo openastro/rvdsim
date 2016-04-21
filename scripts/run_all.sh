@@ -12,10 +12,10 @@ function pause(){
 
 echo ''
 pause 'Press [Enter] to run the Rvdsim simulator ...'
-../build/bin/rvdsim $1/rvdsim_config.json
+../build/bin/rvdsim $1/rvdsim_config.json | tee $1/rvdsim_config.log
 
 pause 'Press [Enter] to generate a plot of the chaser path ...'
-python ../python/plot_chaser_path.py $1/plot_chaser_path.json
+python ../python/plot_chaser_path.py $1/plot_chaser_path.json | tee $1/plot_chaser_path.log
 
 pause 'Press [Enter] to generate a plot of the chaser thrust profile ...'
-python ../python/plot_chaser_thrust.py $1/plot_chaser_thrust.json
+python ../python/plot_chaser_thrust.py $1/plot_chaser_thrust.json | tee $1/plot_chaser_thrust.log
