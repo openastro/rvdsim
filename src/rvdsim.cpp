@@ -17,7 +17,6 @@
 #include <Astro/astro.hpp>
 #include <SML/sml.hpp>
 
-#include "Rvdsim/relativeMotion.hpp"
 #include "Rvdsim/typedefs.hpp"
 
 int main( const int numberOfInputs, const char* inputArguments[ ] )
@@ -309,10 +308,10 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
     {
         // Compute end state resulting from ballistic trajectory.
         rvdsim::Vector6 zeroThrustEndState
-            = rvdsim::propagateClohessyWiltshireSolution( currentState,
-                                                          timeToGo,
-                                                          targetMeanMotion,
-                                                          zeroThrustAcceleration );
+            = astro::propagateClohessyWiltshireSolution( currentState,
+                                                         timeToGo,
+                                                         targetMeanMotion,
+                                                         zeroThrustAcceleration );
 
         // Compute control action using ZEM/ZEM feedback law.
         rvdsim::Vector3 thrustAcceleration( 3 );
@@ -379,10 +378,10 @@ int main( const int numberOfInputs, const char* inputArguments[ ] )
 
         // Propagate dynamics under control action.
         rvdsim::Vector6 constantThrustEndState
-            = rvdsim::propagateClohessyWiltshireSolution( currentState,
-                                                          chaserThrustPulseTime,
-                                                          targetMeanMotion,
-                                                          thrustAcceleration );
+            = astro::propagateClohessyWiltshireSolution( currentState,
+                                                         chaserThrustPulseTime,
+                                                         targetMeanMotion,
+                                                         thrustAcceleration );
 
         // Add chaser thrust to history.
         rvdsim::Vector3 chaserThrust( 3 );
