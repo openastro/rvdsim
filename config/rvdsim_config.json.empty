@@ -26,7 +26,7 @@
     // If mode set to "on_off" and T_max is > 0.0 N, thrust is 0.0 N or T_max.
     "chaser_thrust_settings"                    : [, "", ],
 
-    // Set chaser mass.
+    // Set chaser wet mass.
     // [kg]
     "chaser_mass"                               : ,
 
