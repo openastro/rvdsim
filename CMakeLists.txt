@@ -6,9 +6,9 @@ cmake_minimum_required(VERSION 2.6)
 
 # Change this section to correspond with your project info.
 project(rvdsim C CXX)
-set(${CMAKE_PROJECT_NAME}_SUMMARY              "${PROJECT_SUMMARY}")
-set(${CMAKE_PROJECT_NAME}_VENDOR_NAME          "${PROJECT_VENDOR_NAME}")
-set(${CMAKE_PROJECT_NAME}_VENDOR_CONTACT       "${PROJECT_VENDOR_CONTACT}")
+set(${CMAKE_PROJECT_NAME}_SUMMARY              "A spacecraft rendezvous simulator")
+set(${CMAKE_PROJECT_NAME}_VENDOR_NAME          "openastro")
+set(${CMAKE_PROJECT_NAME}_VENDOR_CONTACT       "me@kartikkumar.com")
 set(${CMAKE_PROJECT_NAME}_VERSION_MAJOR        0)
 set(${CMAKE_PROJECT_NAME}_VERSION_MINOR        0)
 set(${CMAKE_PROJECT_NAME}_VERSION_PATCH        0)
