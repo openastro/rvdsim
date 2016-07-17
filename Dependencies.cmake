@@ -2,8 +2,12 @@
 # Distributed under the MIT License.
 # See accompanying file LICENSE.md or copy at http://opensource.org/licenses/MIT
 
-# Include script to build external library with CMake.
+# Include script to build external libraries with CMake.
 include(ExternalProject)
+
+# -------------------------------
+
+# SML: https://github.com/openastro/sml
 
 if(NOT BUILD_DEPENDENCIES)
   find_package(SML)
@@ -40,6 +44,8 @@ endif(NOT APPLE)
 
 # -------------------------------
 
+# Astro: https://github.com/openastro/astro
+
 if(NOT BUILD_DEPENDENCIES)
   find_package(Astro)
 endif(NOT BUILD_DEPENDENCIES)
@@ -75,6 +81,47 @@ else(APPLE)
 endif(NOT APPLE)
 
 # -------------------------------
+
+# Control: https://github.com/openastro/control
+
+if(NOT BUILD_DEPENDENCIES)
+  find_package(Control)
+endif(NOT BUILD_DEPENDENCIES)
+
+if(NOT CONTROL_FOUND)
+  message(STATUS "Control will be downloaded when ${CMAKE_PROJECT_NAME} is built")
+  ExternalProject_Add(control-lib
+    DEPENDS sml-lib
+    PREFIX ${EXTERNAL_PATH}/Control
+    #--Download step--------------
+    URL https://github.com/openastro/control/archive/master.zip
+    TIMEOUT 30
+    #--Update/Patch step----------
+    UPDATE_COMMAND ""
+    PATCH_COMMAND ""
+    #--Configure step-------------
+    CONFIGURE_COMMAND ""
+    #--Build step-----------------
+    BUILD_COMMAND ""
+    #--Install step---------------
+    INSTALL_COMMAND ""
+    #--Output logging-------------
+    LOG_DOWNLOAD ON
+  )
+  ExternalProject_Get_Property(control-lib source_dir)
+  set(CONTROL_INCLUDE_DIRS ${source_dir}/include
+      CACHE INTERNAL "Path to include folder for Control")
+endif(NOT CONTROL_FOUND)
+
+if(NOT APPLE)
+  include_directories(SYSTEM AFTER "${CONTROL_INCLUDE_DIRS}")
+else(APPLE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem \"${CONTROL_INCLUDE_DIRS}\"")
+endif(NOT APPLE)
+
+# -------------------------------
+
+# RapidJSON: https://github.com/miloyip/rapidjson
 
 if(NOT BUILD_DEPENDENCIES)
   find_package(rapidjson)
@@ -113,6 +160,8 @@ else(APPLE)
 endif(NOT APPLE)
 
 # -------------------------------
+
+# Catch: https://github.com/philsquared/Catch
 
 if(BUILD_TESTS)
   if(NOT BUILD_DEPENDENCIES)
