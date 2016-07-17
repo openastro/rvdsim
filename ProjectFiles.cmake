@@ -3,16 +3,17 @@
 # See accompanying file LICENSE.md or copy at http://opensource.org/licenses/MIT
 
 # Set project source files.
-set(SRC
-  "${SRC_PATH}/factorial.cpp"
-)
+# set(SRC
+# )
 
 # Set project main file.
 set(MAIN_SRC
-  "${SRC_PATH}/rvdsim.cpp"
+  "${SRC_PATH}/main.cpp"
 )
 
 # Set project test source files.
 set(TEST_SRC
   "${TEST_SRC_PATH}/testRvdsim.cpp"
+  "${TEST_SRC_PATH}/testUserInput.cpp"
+  "${TEST_SRC_PATH}/testTypedefs.cpp"
 )
