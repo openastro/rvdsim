@@ -4,46 +4,42 @@
 {
     // Set propagation parameters.
     // [start_time [s], end_time [s]]
-    "propagation_settings"                      : [,],
+    "propagation_settings"              : [,],
 
     // Set Earth gravitational parameter.
     // [m^3 s^-2].
-    "earth_gravitational_parameter"             : ,
+    "earth_gravitational_parameter"     : ,
 
     // Set semi-major axis of target's orbit (circular orbit).
     // [m]
-    "target_semi_major_axis"                    : ,
+    "target_semi_major_axis"            : ,
 
-    // Set initial, relative Cartesian state for chaser.
+    // Set initial, relative Cartesian state for chaser (in Hill frame).
+    // See Fehse (2003) for definition of reference frame.
     // [x [m], y [m], z [m], xdot [m/s], ydot[m/s], zdot [m/s]]
-    "chaser_initial_state"                      : [, , , , , ],
+    "chaser_initial_state"              : [,,,,,],
 
     // Set chaser thrust settings.
-    // [T_max [N], (throttle|on_off|off), frequency [Hz]]
-    // If mode set to "off", T_max is ignored.
-    // If mode set to "throttle" or "on_off" and T_max is 0.0 N, thrust is unconstrained.
-    // If mode set to "throttle" and T_max is > 0.0 N, thrust is constrained.
-    // If mode set to "on_off" and T_max is > 0.0 N, thrust is 0.0 N or T_max.
-    "chaser_thrust_settings"                    : [, "", ],
+    // [(throttle|on_off|off), maximum [N], frequency [Hz]]
+    // If mode set to "off", "maximum" is ignored.
+    // If mode set to "throttle" and "maximum" is set to 0.0, thrust is unconstrained.
+    // If mode set to "throttle" and "maximum" is set, thrust magnitude is constrained to maximum.
+    // If mode set to "on_off" and "maximum" is set, thrust magnitude is 0 N or "maximum".
+    "chaser_thrust_settings"            : ["",,],
 
-    // Set chaser wet mass.
-    // [kg]
-    "chaser_mass"                               : ,
+    // // Set chaser wet mass.
+    // // [kg]
+    "chaser_wet_mass"                   : ,
 
     // Set arrival distance tolerance.
     // If the final state of the chaser is within this distance with respect to the target, the
     // simulation is deemed successful.
     // [m]
-    "arrival_distance_tolerance"                : ,
+    "arrival_distance_tolerance"        : ,
 
-    // Set output directory.
-    "output_directory"                          : "",
-
-    // Set chaser state history output filename.
-    // N.B. the output file is in CSV format!
-    "chaser_state_history_filename"             : "",
-
-    // Set chaser thrust history output filename.
-    // N.B. the output file is in CSV format!
-    "chaser_thrust_history_filename"             : ""
+    // Set output.
+    // N.B. output files are in CSV format!
+    "output_directory"                  : "" ,
+    "chaser_state_history_filename"     : "",
+    "chaser_thrust_history_filename"    : ""
 }

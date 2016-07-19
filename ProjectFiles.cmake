@@ -3,8 +3,9 @@
 # See accompanying file LICENSE.md or copy at http://opensource.org/licenses/MIT
 
 # Set project source files.
-# set(SRC
-# )
+set(SRC
+  "${SRC_PATH}/userInput.cpp"
+)
 
 # Set project main file.
 set(MAIN_SRC
