@@ -62,6 +62,7 @@ public:
           thrustFrequency( aThrustFrequency ),
           chaserWetMass( aChaserWetMass ),
           arrivalDistanceTolerance( anArrivalDistanceTolerance ),
+          outputDirectory( anOutputDirectory ),
           chaserStateHistoryFilename( aChaserStateHistoryFilename ),
           chaserThrustHistoryFilename( aChaserThrustHistoryFilename )
     { }
@@ -95,6 +96,9 @@ public:
 
     //! Arrival distance tolerance [-] used to determine when to terminate simulation.
     const Real arrivalDistanceTolerance;
+
+    //! Path to output directory.
+    const std::string outputDirectory;
 
     //! Chaser state history filename [-].
     const std::string chaserStateHistoryFilename;

@@ -120,7 +120,13 @@ UserInput checkInput( const rapidjson::Document& config )
     }
     const rvdsim::Real chaserThrustMaximum = chaserThrustSettingsIterator->value[ 1 ].GetDouble( );
     std::cout << "Chaser thrust maximum         [N]             ";
-    if ( chaserThrustMaximum < std::numeric_limits< double >::epsilon( ) )
+    if ( chaserThrustMaximum < 0.0 )
+    {
+        std::cout << std::endl;
+        std::cerr << "ERROR: \"chaser thrust maximum\" should be non-negative!" << std::endl;
+        throw;
+    }
+    else if ( chaserThrustMaximum < std::numeric_limits< double >::epsilon( ) )
     {
         std::cout << "UNCONSTRAINED" << std::endl;
     }
@@ -131,6 +137,12 @@ UserInput checkInput( const rapidjson::Document& config )
 
     const rvdsim::Real chaserThrustFrequency
         = chaserThrustSettingsIterator->value[ 2 ].GetDouble( );
+    if ( chaserThrustFrequency < std::numeric_limits< double >::epsilon( ) )
+    {
+        std::cout << std::endl;
+        std::cerr << "ERROR: \"chaser thrust frequency\" should be positive!" << std::endl;
+        throw;
+    }
     std::cout << "Chaser thrust frequency       [Hz]            "
               << chaserThrustFrequency << std::endl;
 

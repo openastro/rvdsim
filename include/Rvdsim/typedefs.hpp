@@ -11,7 +11,7 @@
 #include <map>
 #include <vector>
 
-#include <Astro/astro.hpp>
+#include <astro/astro.hpp>
 
 namespace rvdsim
 {
@@ -34,4 +34,3 @@ typedef std::map< Real, Vector3 > ThrustHistory;
 } // namespace rvdsim
 
 #endif // RVDSIM_TYPEDEFS_HPP
-

@@ -1,7 +1,7 @@
 rvdsim
 ===
 
-rvdsim is a spacecraft rendezvous simulator.
+`rvdsim` is a spacecraft rendezvous simulator.
 
 Features
 ------
@@ -18,7 +18,7 @@ To install this project, please ensure that you have installed the following (in
   - [Gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) (optional)
   - [LCOV](http://ltp.sourceforge.net/coverage/lcov.php) (optional)
 
-In addition, rvdsim depends on the following libraries:
+In addition, `rvdsim` depends on the following libraries:
 
   - [SML](https://www.github.com/openastro/sml) (math library)
   - [Astro](https://www.github.com/openastro/astro) (astrodynamics library)
@@ -38,7 +38,6 @@ Run the following commandsa to download, build, and install this project.
     git submodule init && git submodule update
     mkdir build && cd build
     cmake .. && cmake --build .
-    cd ..
 
 To install the header files, libraries and executables, run the following from within the `build` directory:
 
@@ -66,7 +65,11 @@ The following command is conditional and can only be set if `BUILD_TESTS = ON`:
 
  - `-DBUILD_COVERAGE_ANALYSIS[=ON|OFF (default)]`: build code coverage using [Gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) and [LCOV](http://ltp.sourceforge.net/coverage/lcov.php) (both must be installed; requires [GCC](https://gcc.gnu.org/) compiler; execute coverage analysis from build-directory using `make coverage`)
 
-Pass these options either directly to the `cmake ..` build command or run `ccmake ..` instead to bring up the interface that can be used to toggle options.
+Pass these options either directly to the `cmake ..` command, e.g., to build the tests:
+
+    cmake -DBUILD_TESTS=on ..
+
+N.B.: Toggling options to build tests using `ccmake` does not work correctly, as the necessarily libraries are not download automagically!
 
 Project structure
 -------------
@@ -102,4 +105,4 @@ Once you've made your great commits:
 Disclaimer
 ------
 
-The copyright holders are not liable for any damage(s) incurred due to improper use of rvdsim.
+The copyright holders are not liable for any damage(s) incurred due to improper use of `rvdsim`.
